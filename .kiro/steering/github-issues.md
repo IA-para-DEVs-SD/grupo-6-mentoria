@@ -51,6 +51,17 @@ Informações adicionais, restrições, dependências ou links relevantes.
 5. Se uma US for grande demais, quebre em sub-issues menores mantendo o prefixo `[US-X]`.
 6. Incluir labels adequadas: `frontend`, `backend`, `ia`, `infra`, `docs`, `bug`.
 7. Toda issue deve ser atribuída a pelo menos um responsável.
+8. **Toda issue criada DEVE ser vinculada ao board do projeto** usando o comando `gh project item-add 24 --owner IA-para-DEVs-SD --url <URL_DA_ISSUE>` imediatamente após a criação da issue.
+
+## Vinculação ao Board
+
+Após criar cada issue com `gh issue create`, execute obrigatoriamente:
+
+```bash
+gh project item-add 24 --owner IA-para-DEVs-SD --url <URL_DA_ISSUE_CRIADA>
+```
+
+Isso garante que a issue apareça automaticamente no [board do projeto](https://github.com/orgs/IA-para-DEVs-SD/projects/24).
 
 ## Exemplos
 
