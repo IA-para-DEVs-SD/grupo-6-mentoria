@@ -12,9 +12,9 @@ from fastapi import HTTPException
 sys.modules["app.gemini.agents"] = MagicMock()
 sys.modules["app.gemini.client"] = MagicMock()
 
-from app.gemini.schemas import GeminiActionItem, GeminiGapItem, GeminiPlanResponse
-from app.plans.models import Action, Gap, Plan, Rejection
-from app.plans.service import PlanService, calculate_progress
+from src.gemini.schemas import GeminiActionItem, GeminiGapItem, GeminiPlanResponse
+from src.plans.models import Action, Gap, Plan, Rejection
+from src.plans.service import PlanService, calculate_progress
 
 
 class TestCalculateProgress:

@@ -4,10 +4,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
-from app.auth.schemas import TokenResponse
-from app.auth.service import AuthService
-from app.config import settings
-from app.dependencies import get_db
+from src.auth.schemas import TokenResponse
+from src.auth.service import AuthService
+from src.config import settings
+from src.dependencies import get_db
 
 router = APIRouter()
 auth_service = AuthService()

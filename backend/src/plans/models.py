@@ -8,8 +8,8 @@ def utc_now():
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
-from app.auth.models import UUID
-from app.database import Base
+from src.auth.models import UUID
+from src.database import Base
 
 
 class Plan(Base):

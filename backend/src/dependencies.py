@@ -5,10 +5,10 @@ from fastapi import Depends, HTTPException, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
 
-from app.auth.models import User
-from app.auth.service import AuthService
-from app.config import settings
-from app.database import SessionLocal
+from src.auth.models import User
+from src.auth.service import AuthService
+from src.config import settings
+from src.database import SessionLocal
 
 bearer_scheme = HTTPBearer()
 auth_service = AuthService()

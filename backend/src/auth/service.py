@@ -5,8 +5,8 @@ from fastapi import HTTPException
 from jose import ExpiredSignatureError, JWTError, jwt
 from sqlalchemy.orm import Session
 
-from app.auth.models import User
-from app.config import settings
+from src.auth.models import User
+from src.config import settings
 
 GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
 GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"

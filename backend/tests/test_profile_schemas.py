@@ -7,7 +7,7 @@ from datetime import date, datetime
 import pytest
 from pydantic import ValidationError
 
-from app.profile.schemas import (
+from src.profile.schemas import (
     CareerGoal,
     EducationIn,
     EducationLevel,

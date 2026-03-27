@@ -6,7 +6,7 @@ from datetime import datetime
 
 import pytest
 
-from app.plans.models import Action, Gap, Plan, Rejection
+from src.plans.models import Action, Gap, Plan, Rejection
 
 
 class TestPlanModel:

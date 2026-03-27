@@ -5,9 +5,9 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.auth.router import router as auth_router
-from app.plans.router import router as plans_router
-from app.profile.router import router as profile_router
+from src.auth.router import router as auth_router
+from src.plans.router import router as plans_router
+from src.profile.router import router as profile_router
 
 logger = logging.getLogger(__name__)
 

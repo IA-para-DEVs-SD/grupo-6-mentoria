@@ -6,7 +6,7 @@ from datetime import datetime
 
 import pytest
 
-from app.auth.models import User, UUID as CustomUUID
+from src.auth.models import User, UUID as CustomUUID
 
 
 class TestUUIDTypeDecorator:

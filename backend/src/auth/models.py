@@ -11,7 +11,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.types import TypeDecorator, String as SAString
 import uuid
 
-from app.database import Base
+from src.database import Base
 
 
 class UUID(TypeDecorator):

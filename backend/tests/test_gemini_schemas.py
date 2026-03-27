@@ -4,7 +4,7 @@ Testes unitários para o módulo gemini/schemas.py
 import pytest
 from pydantic import ValidationError
 
-from app.gemini.schemas import GeminiActionItem, GeminiGapItem, GeminiPlanResponse
+from src.gemini.schemas import GeminiActionItem, GeminiGapItem, GeminiPlanResponse
 
 
 class TestGeminiActionItem:

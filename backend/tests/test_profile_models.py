@@ -5,7 +5,7 @@ from datetime import date, datetime
 
 import pytest
 
-from app.profile.models import Education, Experience, Profile
+from src.profile.models import Education, Experience, Profile
 
 
 class TestProfileModel:

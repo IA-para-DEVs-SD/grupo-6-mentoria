@@ -9,10 +9,10 @@ import pytest
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker
 
-from app.auth.models import User
-from app.database import Base
-from app.plans.models import Action, Gap, Plan, Rejection
-from app.profile.models import Education, Experience, Profile
+from src.auth.models import User
+from src.database import Base
+from src.plans.models import Action, Gap, Plan, Rejection
+from src.profile.models import Education, Experience, Profile
 
 
 # ---------------------------------------------------------------------------
@@ -204,7 +204,7 @@ def sample_rejection(db_session, sample_user):
 def valid_jwt_token(sample_user_id):
     """Gera token JWT válido para testes."""
     from jose import jwt
-    from app.config import settings
+    from src.config import settings
 
     payload = {
         "sub": str(sample_user_id),
@@ -217,7 +217,7 @@ def valid_jwt_token(sample_user_id):
 def expired_jwt_token(sample_user_id):
     """Gera token JWT expirado para testes."""
     from jose import jwt
-    from app.config import settings
+    from src.config import settings
 
     payload = {
         "sub": str(sample_user_id),

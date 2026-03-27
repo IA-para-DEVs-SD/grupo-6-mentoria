@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 import pytest
 from pydantic import ValidationError
 
-from app.auth.schemas import TokenResponse, UserOut
+from src.auth.schemas import TokenResponse, UserOut
 
 
 class TestTokenResponse:

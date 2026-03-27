@@ -24,14 +24,14 @@ Editar o `.env` e preencher:
 alembic upgrade head
 
 # 5. Subir o servidor
-uvicorn app.main:app --reload
+uvicorn src.main:app --reload
 ```
 
 ## Próximas vezes
 
 ```bash
 source .venv/bin/activate
-uvicorn app.main:app --reload
+uvicorn src.main:app --reload
 ```
 
 ## Acessar

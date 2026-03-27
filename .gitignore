@@ -403,6 +403,9 @@ $RECYCLE.BIN/
 
 Explain
 
+# Database
+*.db
+
 # Frontend
 frontend/node_modules/
 frontend/dist/

@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.auth.models import User
-from app.dependencies import get_current_user, get_db
-from app.profile.schemas import ProfileIn, ProfileOut
-from app.profile.service import ProfileService
+from src.auth.models import User
+from src.dependencies import get_current_user, get_db
+from src.profile.schemas import ProfileIn, ProfileOut
+from src.profile.service import ProfileService
 
 router = APIRouter(prefix="/profile", tags=["profile"])
 profile_service = ProfileService()
