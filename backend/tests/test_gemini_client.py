@@ -8,7 +8,7 @@ a variável GEMINI_API_KEY configurada e é testada em testes de integração.
 import pytest
 from pydantic import ValidationError
 
-from app.gemini.schemas import GeminiActionItem, GeminiGapItem, GeminiPlanResponse
+from src.gemini.schemas import GeminiActionItem, GeminiGapItem, GeminiPlanResponse
 
 
 class TestGeminiPlanResponseValidation:

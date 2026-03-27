@@ -4,11 +4,11 @@ from uuid import UUID
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from app.gemini.client import GeminiClient
-from app.plans.models import Action, Gap, Plan, Rejection
-from app.plans.schemas import ActionOut, PlanOut, PlanSummary, ProgressOut
-from app.profile.models import Profile
-from app.profile.service import ProfileService
+from src.gemini.client import GeminiClient
+from src.plans.models import Action, Gap, Plan, Rejection
+from src.plans.schemas import ActionOut, PlanOut, PlanSummary, ProgressOut
+from src.profile.models import Profile
+from src.profile.service import ProfileService
 
 _gemini = GeminiClient()
 _profile_service = ProfileService()

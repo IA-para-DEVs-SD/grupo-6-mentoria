@@ -8,8 +8,8 @@ import pytest
 from fastapi import HTTPException
 from fastapi.security import HTTPAuthorizationCredentials
 
-from app.auth.models import User
-from app.dependencies import get_current_user, get_db, rate_limiter
+from src.auth.models import User
+from src.dependencies import get_current_user, get_db, rate_limiter
 
 
 class TestGetDb:

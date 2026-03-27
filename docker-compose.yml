@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mentoria-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    networks:
+      - mentoria-net
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8000
+    container_name: mentoria-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - mentoria-net
+    restart: unless-stopped
+
+networks:
+  mentoria-net:
+    driver: bridge

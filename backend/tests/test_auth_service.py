@@ -8,8 +8,8 @@ from unittest.mock import MagicMock, patch
 import pytest
 from fastapi import HTTPException
 
-from app.auth.models import User
-from app.auth.service import AuthService
+from src.auth.models import User
+from src.auth.service import AuthService
 
 
 class TestAuthServiceGetAuthorizationUrl:
@@ -132,7 +132,7 @@ class TestAuthServiceCreateJwt:
         # Arrange
         service = AuthService()
         from jose import jwt
-        from app.config import settings
+        from src.config import settings
 
         # Act
         token = service.create_jwt(sample_user_id)
@@ -145,7 +145,7 @@ class TestAuthServiceCreateJwt:
         # Arrange
         service = AuthService()
         from jose import jwt
-        from app.config import settings
+        from src.config import settings
 
         # Act
         token = service.create_jwt(sample_user_id)

@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from app.plans.models import Action, Rejection
-    from app.profile.models import Profile
+    from src.plans.models import Action, Rejection
+    from src.profile.models import Profile
 
 
 def _format_profile_section(profile: "Profile") -> str:

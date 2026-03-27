@@ -6,8 +6,8 @@ from pydantic import BaseModel
 from pydantic_ai import Agent
 from pydantic_ai.models.gemini import GeminiModel
 
-from app.config import settings
-from app.gemini.schemas import GeminiActionItem, GeminiPlanResponse
+from src.config import settings
+from src.gemini.schemas import GeminiActionItem, GeminiPlanResponse
 
 os.environ.setdefault("GEMINI_API_KEY", settings.GEMINI_API_KEY)
 

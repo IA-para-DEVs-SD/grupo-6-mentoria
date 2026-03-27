@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from app.gemini.prompts import (
+from src.gemini.prompts import (
     _format_profile_section,
     _format_rejections_section,
     build_actions_prompt,
@@ -57,7 +57,7 @@ class TestFormatProfileSection:
 
     def test_handles_experience_without_end_date(self, db_session, sample_user):
         # Arrange
-        from app.profile.models import Education, Experience, Profile
+        from src.profile.models import Education, Experience, Profile
 
         profile = Profile(
             user_id=sample_user.id,
@@ -128,7 +128,7 @@ class TestFormatRejectionsSection:
 
     def test_formats_multiple_rejections(self, db_session, sample_user):
         # Arrange
-        from app.plans.models import Rejection
+        from src.plans.models import Rejection
 
         rejection1 = Rejection(
             user_id=sample_user.id,

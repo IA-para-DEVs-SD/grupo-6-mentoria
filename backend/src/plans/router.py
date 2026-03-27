@@ -3,16 +3,16 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
-from app.auth.models import User
-from app.dependencies import get_current_user, get_db
-from app.plans.schemas import (
+from src.auth.models import User
+from src.dependencies import get_current_user, get_db
+from src.plans.schemas import (
     ActionOut,
     ActionStatusUpdate,
     PlanOut,
     PlanSummary,
     ProgressOut,
 )
-from app.plans.service import PlanService
+from src.plans.service import PlanService
 
 router = APIRouter(prefix="/plans", tags=["plans"])
 _service = PlanService()

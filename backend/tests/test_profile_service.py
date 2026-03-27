@@ -5,8 +5,8 @@ from datetime import date
 
 import pytest
 
-from app.profile.models import Education, Experience, Profile
-from app.profile.schemas import (
+from src.profile.models import Education, Experience, Profile
+from src.profile.schemas import (
     CareerGoal,
     EducationIn,
     EducationLevel,
@@ -14,7 +14,7 @@ from app.profile.schemas import (
     ProfileIn,
     Seniority,
 )
-from app.profile.service import ProfileService
+from src.profile.service import ProfileService
 
 
 class TestProfileServiceGetProfile:

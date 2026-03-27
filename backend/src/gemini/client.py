@@ -8,13 +8,13 @@ from typing import TYPE_CHECKING
 
 from fastapi import HTTPException
 
-from app.gemini.agents import actions_agent, roadmap_agent
-from app.gemini.prompts import build_actions_prompt, build_plan_prompt
-from app.gemini.schemas import GeminiActionItem, GeminiPlanResponse
+from src.gemini.agents import actions_agent, roadmap_agent
+from src.gemini.prompts import build_actions_prompt, build_plan_prompt
+from src.gemini.schemas import GeminiActionItem, GeminiPlanResponse
 
 if TYPE_CHECKING:
-    from app.plans.models import Action, Rejection
-    from app.profile.models import Profile
+    from src.plans.models import Action, Rejection
+    from src.profile.models import Profile
 
 logger = logging.getLogger(__name__)
 _TIMEOUT = 30

@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 import pytest
 from pydantic import ValidationError
 
-from app.plans.schemas import (
+from src.plans.schemas import (
     ActionOut,
     ActionStatus,
     ActionStatusUpdate,
