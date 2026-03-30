@@ -1,35 +1,46 @@
 # Arquitetura — MentorIA (Frontend)
 
-> Documento completo de arquitetura do projeto: [`backend/docs/ARCHITECTURE.md`](../../backend/docs/ARCHITECTURE.md)
+## Visão Geral
+
+SPA (Single Page Application) responsável pela interface do MentorIA. Gerencia o fluxo de autenticação via Google OAuth, onboarding do perfil profissional, e a visualização/gestão dos planos de desenvolvimento gerados pela IA. Comunica-se com o backend via REST com autenticação JWT.
+
+> Arquitetura do backend: [`backend/docs/ARCHITECTURE.md`](../../backend/docs/ARCHITECTURE.md)
+
+---
 
 ## Stack
 
-- **Vue 3** (Composition API + `<script setup>`)
-- **PrimeVue 4** (componentes UI, tema Aura via `@primevue/themes/aura`)
-- **Tailwind CSS 4** (utilitarios)
-- **Pinia** (state management)
-- **Vue Router 5** (SPA routing)
-- **Axios** (HTTP client)
-- **Lucide Vue Next** + **PrimeIcons** (icones)
-- **Vite 7** (build tool)
-- **TypeScript 5.9**
-- **npm-run-all2** (orquestracao de scripts de build)
+| Tecnologia | Versão | Função |
+|---|---|---|
+| Vue 3 | ^3.5 | Framework (Composition API + `<script setup>`) |
+| TypeScript | ~5.9 | Linguagem |
+| PrimeVue | ^4.5 | Componentes UI (tema Aura) |
+| Tailwind CSS | ^4.2 | Utilitários CSS |
+| Pinia | ^3.0 | State management |
+| Vue Router | ^5.0 | SPA routing |
+| Axios | ^1.13 | HTTP client |
+| Lucide Vue Next | — | Ícones |
+| PrimeIcons | ^7.0 | Ícones PrimeVue |
+| Vite | ^7.3 | Build tool |
+| npm-run-all2 | — | Orquestração de scripts de build |
 
-## Estrutura
+---
+
+## Estrutura de Pastas/Arquivos
 
 ```
-src/
+frontend/src/
 ├── App.vue                    # Root: Toast, ConfirmDialog, RouterView
-├── main.ts                    # Bootstrap: Pinia, PrimeVue (tema Aura), Router, ToastService, ConfirmationService
+├── main.ts                    # Bootstrap: Pinia, PrimeVue (tema Aura), Router
 ├── router/index.ts            # Rotas + navigation guard (JWT)
 │
-├── pages/                     # Paginas (1 por rota)
-│   ├── LoginPage.vue          # /
-│   ├── AuthCallbackPage.vue   # /auth/callback
-│   ├── OnboardingPage.vue     # /onboarding (wizard 5 steps)
-│   ├── LoadingAIPage.vue      # /loading (aguarda geracao do plano)
-│   ├── HomePage.vue           # /home (lista de planos)
-│   └── PlanDetailPage.vue     # /plan/:id (detalhe do plano)
+├── pages/                     # Páginas (1 por rota)
+│   ├── LoginPage.vue
+│   ├── AuthCallbackPage.vue
+│   ├── OnboardingPage.vue
+│   ├── LoadingAIPage.vue
+│   ├── HomePage.vue
+│   └── PlanDetailPage.vue
 │
 ├── components/
 │   ├── auth/                  # GoogleLoginButton
@@ -38,90 +49,68 @@ src/
 │   └── plan/                  # ActionItem, ActionTimeline, GapsList, PlanHeader, ProgressCard
 │
 ├── composables/
-│   └── useOnboarding.ts       # Logica reativa do wizard de onboarding
+│   └── useOnboarding.ts       # Lógica reativa do wizard de onboarding
 │
 ├── layouts/
-│   └── DefaultLayout.vue      # Header com logo MentorIA, botao de logout e slot para conteudo
+│   └── DefaultLayout.vue      # Header (logo + logout) e slot para conteúdo
 │
 ├── services/                  # Camada HTTP (Axios)
-│   ├── api.ts                 # Instancia Axios (baseURL, interceptors JWT/401)
+│   ├── api.ts                 # Instância Axios (baseURL, interceptors JWT/401)
 │   ├── authService.ts         # loginWithGoogle(), logout()
-│   ├── planService.ts         # CRUD planos e acoes
+│   ├── planService.ts         # CRUD planos e ações
 │   └── profileService.ts     # get/save perfil
 │
 ├── stores/                    # Pinia stores
-│   ├── authStore.ts           # Token, autenticacao, login/logout
-│   ├── plansStore.ts          # Lista planos, plano atual, acoes
-│   └── profileStore.ts       # Perfil do usuario
+│   ├── authStore.ts           # Token, autenticação, login/logout
+│   ├── plansStore.ts          # Lista planos, plano atual, ações
+│   └── profileStore.ts       # Perfil do usuário
 │
 ├── types/                     # TypeScript types (alinhados com backend schemas)
 │   ├── index.ts               # Re-exports
 │   ├── user.ts                # User, TokenResponse
-│   ├── profile.ts             # Seniority, EducationLevel, CareerGoal, ProfileData/Out, label maps
+│   ├── profile.ts             # Seniority, EducationLevel, CareerGoal, ProfileData/Out
 │   └── plan.ts                # ActionStatus, Priority, Plan, Action, Gap
 │
 └── assets/
     └── main.css               # Estilos globais + Tailwind
 ```
 
+---
+
 ## Rotas
 
-| Rota              | Pagina             | Auth | Descricao                        |
-|-------------------|--------------------|------|----------------------------------|
-| `/`               | LoginPage          | Nao  | Login com Google                 |
-| `/auth/callback`  | AuthCallbackPage   | Nao  | Recebe token do OAuth callback   |
-| `/onboarding`     | OnboardingPage     | Sim  | Wizard de perfil (5 etapas)      |
-| `/loading`        | LoadingAIPage      | Sim  | Tela de loading durante geracao  |
-| `/home`           | HomePage           | Sim  | Lista de planos do usuario       |
-| `/plan/:id`       | PlanDetailPage     | Sim  | Detalhe do plano com acoes/gaps  |
+| Rota | Página | Auth | Descrição |
+|---|---|---|---|
+| `/` | LoginPage | Não | Login com Google |
+| `/auth/callback` | AuthCallbackPage | Não | Recebe token do OAuth callback |
+| `/onboarding` | OnboardingPage | Sim | Wizard de perfil (5 etapas) |
+| `/loading` | LoadingAIPage | Sim | Tela de loading durante geração do plano |
+| `/home` | HomePage | Sim | Lista de planos do usuário |
+| `/plan/:id` | PlanDetailPage | Sim | Detalhe do plano com ações e gaps |
 
-## Navigation Guard
+### Navigation Guard
 
-- Rotas publicas: `/` e `/auth/callback`
-- Rotas protegidas: todas as demais (requer `token` no localStorage via `authStore.isAuthenticated`)
-- Se autenticado e acessa `/` -> redireciona para `/home`
+- Rotas públicas: `/` e `/auth/callback`
+- Rotas protegidas: todas as demais (requer token no localStorage)
+- Se autenticado e acessa `/` → redireciona para `/home`
 
-## Layout
+---
 
-O `DefaultLayout.vue` fornece a estrutura visual padrao para paginas autenticadas:
-- Header com logo MentorIA (link para `/home`) e botao de logout
-- Slot para conteudo da pagina
-- Usa componentes Lucide (`BrainCircuit`, `LogOut`) e PrimeVue (`Button`)
+## Diagrama de Conexões
 
-## Comunicacao com Backend
+```mermaid
+graph LR
+    Navegador["Navegador"] --> VueApp["Vue App (SPA)"]
 
-- Base URL: `VITE_API_URL` (default: `http://localhost:8000`)
-- Interceptor de request: adiciona `Authorization: Bearer {token}`
-- Interceptor de response: se 401 -> limpa token e redireciona para `/`
-- No Docker: Nginx faz proxy de `/api/*` para `backend:8000`
+    subgraph Frontend
+        VueApp --> Router["Vue Router + Guard"]
+        VueApp --> Stores["Pinia Stores"]
+        Stores --> Services["Services (Axios)"]
+        Router --> Pages["Pages"]
+        Pages --> Components["Components"]
+        Pages --> Composables["Composables"]
+    end
 
-## Fluxo do Usuario
-
+    Services -->|"HTTP REST + JWT"| Backend["Backend API (FastAPI)"]
+    VueApp -->|"OAuth redirect"| Google["Google OAuth"]
 ```
-Login -> OAuth Google -> Callback (salva JWT)
-  +-- Tem perfil? -> HomePage (lista planos)
-  +-- Nao tem? -> Onboarding (5 steps) -> POST /profile
-                    -> LoadingAIPage -> POST /plans (Gemini gera plano)
-                    -> PlanDetailPage (visualizar/gerenciar plano)
-```
-
-## Onboarding (5 etapas)
-
-1. **StepTrajetoria** -- Experiencias profissionais (cargo, senioridade, empresa, datas)
-2. **StepFormacao** -- Formacao academica (instituicao, nivel, titulo, area, datas)
-3. **StepHabilidades** -- Lista de habilidades tecnicas
-4. **StepObjetivo** -- Objetivo de carreira (enum: crescer, liderar, mudar de area)
-5. **StepRevisao** -- Revisao dos dados antes de enviar
-
-## PlanDetailPage (funcionalidades)
-
-- Visualizar gaps identificados pela IA (GapsList)
-- Timeline de acoes ordenadas por sequencia (ActionTimeline)
-- Marcar acao como concluida/pendente (PATCH)
-- Remover acao (DELETE -- registra rejeicao no backend, retorna progresso atualizado)
-- Gerar mais acoes via IA (POST /actions/generate)
-- Barra de progresso calculada pelo backend
-
-## Testes
-
-Atualmente o frontend nao possui testes automatizados configurados.
