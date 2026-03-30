@@ -8,9 +8,10 @@
     "patterns": [
       "backend/tests/test_*.py"
     ]
-  },
+  },  
   "then": {
-    "type": "askAgent",
-    "prompt": "Execute os testes do backend com: docker compose exec backend python3 -m pytest tests/ --tb=short -q. Se houver falhas, analise os erros e corrija os testes automaticamente. Após corrigir, rode os testes novamente para confirmar que todos passam."
+    "type": "runCommand",
+    "command": "docker compose exec backend python3 -m pytest tests/ --tb=short -q || true",
+    "timeout": 30
   }
 }
