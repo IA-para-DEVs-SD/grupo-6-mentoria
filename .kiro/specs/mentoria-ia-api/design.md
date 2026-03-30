@@ -4,7 +4,7 @@
 
 A Mentoria.IA API é um backend REST construído em FastAPI (Python) que expõe endpoints para autenticação via Google OAuth 2.0, gerenciamento de perfil profissional, geração de planos de desenvolvimento via Google Gemini (através do PydanticAI) e controle de progresso do usuário.
 
-A API é stateless: toda autorização é feita via JWT. O estado persistente fica no PostgreSQL; o Redis é usado para rate limiting e cache de sessão. O processamento de IA é síncrono do ponto de vista do cliente (request/response com timeout de 30s), sem filas de background para o MVP.
+A API é stateless: toda autorização é feita via JWT. O estado persistente fica no SQLite (desenvolvimento/MVP); o Redis é usado para rate limiting. O processamento de IA é síncrono do ponto de vista do cliente (request/response com timeout de 30s), sem filas de background para o MVP.
 
 ### Objetivos de Design
 
@@ -26,7 +26,7 @@ Cliente (Vue.js)
    Nginx (TLS termination, reverse proxy)
       │
       ▼
-   FastAPI (porta 8000)
+   FastAPI (porta 8000) — Python 3.12
    ┌─────────────────────────────────────────┐
    │  Routers: /auth  /profile  /plans       │
    │                                         │
@@ -35,15 +35,15 @@ Cliente (Vue.js)
    │  Services: AuthService  ProfileService  │
    │            PlanService  GeminiClient    │
    │                                         │
-   │  Agents (PydanticAI):                   │
-   │    ProfileAnalyzerAgent                 │
-   │    RoadmapGeneratorAgent                │
+   │  Agents (PydanticAI gemini-2.5-flash):  │
+   │    roadmap_agent                        │
+   │    actions_agent                        │
    └──────────┬──────────────────────────────┘
               │
      ┌────────┴────────┐
      ▼                 ▼
- PostgreSQL           Redis
- (dados)         (rate limiting)
+  SQLite              Redis
+ (mentoria.db)   (rate limiting)
               │
               ▼
        Google Gemini API
@@ -80,19 +80,20 @@ Cliente (Vue.js)
 ### Estrutura de Módulos
 
 ```
-app/
+src/
 ├── main.py                  # FastAPI app, middleware, routers
 ├── config.py                # Settings via pydantic-settings
-├── database.py              # SQLAlchemy engine + session
+├── database.py              # SQLAlchemy engine + session (SQLite)
 ├── dependencies.py          # get_current_user, get_db, rate_limiter
 │
 ├── auth/
 │   ├── router.py            # GET /auth/google/login, /callback
 │   ├── service.py           # AuthService
-│   └── schemas.py           # TokenResponse, UserOut
+│   ├── schemas.py           # TokenResponse, UserOut
+│   └── models.py            # ORM: User
 │
 ├── profile/
-│   ├── router.py            # GET/POST/PUT /profile
+│   ├── router.py            # GET/POST /profile
 │   ├── service.py           # ProfileService
 │   ├── schemas.py           # ProfileIn, ProfileOut, ExperienceIn, EducationIn
 │   └── models.py            # ORM: Profile, Experience, Education
@@ -105,7 +106,7 @@ app/
 │
 └── gemini/
     ├── client.py            # GeminiClient (orquestra agentes)
-    ├── agents.py            # ProfileAnalyzerAgent, RoadmapGeneratorAgent
+    ├── agents.py            # roadmap_agent, actions_agent (PydanticAI)
     ├── prompts.py           # Templates de prompt
     └── schemas.py           # GeminiPlanResponse, GeminiActionItem
 ```
@@ -152,6 +153,13 @@ class GeminiClient:
     def generate_plan(profile: ProfileData, rejections: list[Rejection]) -> GeminiPlanResponse
     def generate_actions(profile: ProfileData, existing_actions: list[Action], rejections: list[Rejection]) -> list[GeminiActionItem]
 ```
+
+### Agentes PydanticAI
+
+O sistema usa 2 agentes PydanticAI com o modelo `gemini-2.5-flash`, executados via `ThreadPoolExecutor` com timeout de 30s:
+
+- **roadmap_agent**: recebe perfil + rejeições, retorna `GeminiPlanResponse` (plan_name, gaps[], actions[])
+- **actions_agent**: recebe perfil + ações existentes + rejeições, retorna `ActionsResponse` (actions[])
 
 ### Endpoints REST
 
@@ -523,6 +531,25 @@ Cada teste de propriedade deve incluir comentário:
 - **pytest** como runner principal
 - **pytest-asyncio** para testes de endpoints async
 - **httpx.AsyncClient** para testes de integração dos routers
-- **SQLite em memória** para testes (SQLAlchemy suporta ambos)
+- **SQLite em memória** para testes (padrão do projeto, sem dependência externa)
 - **fakeredis** para mockar Redis nos testes de rate limiting
 - **unittest.mock** para mockar chamadas ao Gemini
+
+### Pré-requisitos de Execução
+
+| Ferramenta | Versão mínima |
+|---|---|
+| Python | 3.12 |
+| pip | qualquer recente |
+
+Variáveis de ambiente obrigatórias (via `.env`):
+
+| Variável | Descrição |
+|---|---|
+| `DATABASE_URL` | `sqlite:///./mentoria.db` (padrão) |
+| `REDIS_URL` | `redis://localhost:6379` |
+| `GOOGLE_CLIENT_ID` | OAuth 2.0 Client ID |
+| `GOOGLE_CLIENT_SECRET` | OAuth 2.0 Client Secret |
+| `GOOGLE_REDIRECT_URI` | `http://localhost:8000/auth/google/callback` |
+| `JWT_SECRET` | String longa e aleatória |
+| `GEMINI_API_KEY` | Chave da API Google Gemini |
