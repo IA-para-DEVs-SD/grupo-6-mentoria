@@ -10,20 +10,22 @@ API REST responsável pela lógica de negócio da plataforma MentorIA. Gerencia 
 
 ## Stack
 
-| Tecnologia | Versão / Detalhe | Função |
+| Tecnologia | Versão | Função |
 |---|---|---|
 | Python | 3.12 | Linguagem |
-| FastAPI | — | Framework web async |
-| SQLAlchemy | — | ORM |
-| Alembic | — | Migrations |
-| SQLite | — | Banco de dados |
-| Redis | — | Rate limiting (sliding window) |
-| PydanticAI | — | Agentes de IA com output estruturado |
+| FastAPI | 0.135+ | Framework web async |
+| SQLAlchemy | 2.x | ORM |
+| Alembic | 1.x | Migrations |
+| SQLite | — | Banco de dados (embutido) |
+| Redis | 5.x | Rate limiting (sliding window) |
+| PydanticAI | 0.x | Agentes de IA com output estruturado |
 | Google Gemini | 2.5 Flash | Modelo LLM |
-| Pydantic v2 | — | Validação de dados |
-| pydantic-settings | — | Configuração via .env |
-| python-jose | — | JWT (criação/verificação) |
-| authlib + httpx | — | OAuth 2.0 client |
+| Pydantic | 2.x | Validação de dados |
+| pydantic-settings | 2.x | Configuração via .env |
+| python-jose | 3.x | JWT (criação/verificação) |
+| authlib | 1.x | OAuth 2.0 client |
+| httpx | 0.x | HTTP client async |
+| uvicorn | 0.x | ASGI server |
 
 ---
 

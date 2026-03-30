@@ -15,17 +15,10 @@
 
 ## 🛠️ Tecnologias Utilizadas
 
-| Camada | Tecnologia | Justificativa |
-|---|---|---|
-| Frontend | Vue.js 3 + PrimeVue 4 + Tailwind CSS 4 | Composition API, componentes enterprise-ready, utilitários CSS |
-| State | Pinia | State management reativo e type-safe para Vue 3 |
-| Build | Vite 7 + TypeScript 5.9 | Build rápido, HMR, tipagem forte end-to-end |
-| Backend | Python 3.12 + FastAPI | Alta performance async, tipagem forte, ecossistema IA |
-| ORM | SQLAlchemy + Alembic | ORM maduro com migrations versionadas |
-| Banco de Dados | SQLite | Leve, sem dependências externas, ideal para MVP |
-| LLM | Google Gemini 2.5 Flash via PydanticAI | Outputs estruturados com validação, agentes inteligentes |
-| Autenticação | Google OAuth 2.0 + JWT (python-jose) | Login social sem senha, tokens stateless |
-| Infra | Docker Compose | Frontend e backend containerizados em rede local |
+Para detalhes completos com versões, consulte a seção Stack de cada módulo:
+
+- [Stack do Backend](backend/docs/ARCHITECTURE.md#stack)
+- [Stack do Frontend](frontend/docs/ARCHITECTURE.md#stack)
 
 ---
 
