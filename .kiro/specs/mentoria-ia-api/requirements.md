@@ -200,17 +200,20 @@ O frontend não faz parte do escopo desta spec. Todos os requisitos aqui descrit
 
 ### RNF 1: Stack Técnica
 
-- THE API SHALL ser implementada em Python com FastAPI.
-- THE API SHALL usar SQLAlchemy como ORM com suporte a PostgreSQL e SQLite.
+- THE API SHALL ser implementada em Python **3.12** ou superior com FastAPI.
+- THE API SHALL usar SQLAlchemy como ORM com SQLite como banco padrão para desenvolvimento e testes.
 - THE API SHALL usar Alembic para gerenciamento de migrações de banco de dados.
-- THE Auth_Service SHALL usar a biblioteca `authlib` ou `google-auth` para o fluxo OAuth 2.0.
-- THE Gemini_Client SHALL usar o SDK oficial `google-generativeai` para comunicação com a API Gemini.
+- THE Auth_Service SHALL usar a biblioteca `authlib` para o fluxo OAuth 2.0.
+- THE Gemini_Client SHALL usar PydanticAI com o modelo `gemini-2.5-flash` para comunicação com a API Gemini.
+- THE API SHALL usar `fakeredis` nos testes para mockar o Redis sem dependência de serviço externo.
 
 ### RNF 2: Estrutura e Organização
 
 - THE API SHALL organizar o código em módulos separados por domínio: `auth`, `profile`, `plans`, `gemini`.
 - THE API SHALL expor documentação automática via Swagger UI em `/docs` e ReDoc em `/redoc`.
 - THE API SHALL usar variáveis de ambiente para todas as configurações sensíveis (chaves de API, secrets, URLs de banco).
+- THE API SHALL incluir arquivo `rodar_projeto.md` com instruções detalhadas de execução local, incluindo pré-requisitos (Python 3.12), obtenção de credenciais e comandos passo a passo.
+- THE API SHALL incluir arquivo `.env.example` com todas as variáveis necessárias e valores de exemplo descritivos.
 
 ### RNF 3: Confiabilidade
 

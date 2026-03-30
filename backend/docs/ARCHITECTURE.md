@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-API REST responsável pela lógica de negócio da plataforma MentorIA. Gerencia autenticação via Google OAuth, perfis de usuário, e a geração de planos de desenvolvimento de carreira utilizando agentes de IA (Google Gemini). Inclui rate limiting via Redis e persistência em SQLite.
+API REST responsável pela lógica de negócio da plataforma MentorIA. Gerencia autenticação via Google OAuth, perfis de usuário, e a geração de planos de desenvolvimento de carreira utilizando agentes de IA (Google Gemini). Persistência em SQLite.
 
 > Arquitetura do frontend: [`frontend/docs/ARCHITECTURE.md`](../../frontend/docs/ARCHITECTURE.md)
 
@@ -17,7 +17,6 @@ API REST responsável pela lógica de negócio da plataforma MentorIA. Gerencia 
 | SQLAlchemy | 2.x | ORM |
 | Alembic | 1.x | Migrations |
 | SQLite | — | Banco de dados (embutido) |
-| Redis | 5.x | Rate limiting (sliding window) |
 | PydanticAI | 0.x | Agentes de IA com output estruturado |
 | Google Gemini | 2.5 Flash | Modelo LLM |
 | Pydantic | 2.x | Validação de dados |
@@ -37,7 +36,7 @@ backend/
 │   ├── main.py              # App FastAPI, middlewares (CORS, logging), registro de routers
 │   ├── config.py            # Settings via pydantic-settings (.env)
 │   ├── database.py          # Engine SQLAlchemy + SessionLocal
-│   ├── dependencies.py      # get_db, get_current_user, rate_limiter (Redis)
+│   ├── dependencies.py      # get_db, get_current_user
 │   ├── auth/
 │   │   ├── models.py        # User (UUID, google_id, name, email, photo_url)
 │   │   ├── schemas.py       # TokenResponse, UserOut
@@ -110,14 +109,12 @@ graph LR
         FastAPI["FastAPI"] --> AuthModule["Auth (OAuth + JWT)"]
         FastAPI --> ProfileModule["Profile Service"]
         FastAPI --> PlansModule["Plans Service"]
-        FastAPI --> RateLimiter["Rate Limiter"]
         PlansModule --> GeminiClient["Gemini Client"]
         GeminiClient --> Agents["PydanticAI Agents"]
     end
 
     AuthModule -->|OAuth 2.0| Google["Google OAuth"]
     Agents -->|API| Gemini["Google Gemini 2.5 Flash"]
-    RateLimiter --> Redis["Redis"]
     ProfileModule --> SQLite["SQLite"]
     PlansModule --> SQLite
     AuthModule --> SQLite

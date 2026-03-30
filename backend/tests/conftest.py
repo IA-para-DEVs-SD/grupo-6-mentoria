@@ -243,15 +243,3 @@ def mock_gemini_client():
     """Mock do cliente Gemini."""
     with patch("src.plans.service._gemini") as mock:
         yield mock
-
-
-@pytest.fixture
-def mock_redis():
-    """Mock do Redis para rate limiting."""
-    with patch("src.dependencies.redis") as mock:
-        mock_instance = MagicMock()
-        mock.from_url.return_value = mock_instance
-        mock_instance.pipeline.return_value.__enter__ = MagicMock(return_value=mock_instance)
-        mock_instance.pipeline.return_value.__exit__ = MagicMock(return_value=False)
-        mock_instance.execute.return_value = [None, None, 1, None]
-        yield mock_instance
