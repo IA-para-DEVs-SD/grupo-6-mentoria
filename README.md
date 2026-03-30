@@ -16,10 +16,6 @@
 
 ## 🛠️ Tecnologias
 
-Para detalhes completos com versões, consulte a seção Stack de cada módulo:
-
-- [Stack do Backend](backend/docs/ARCHITECTURE.md#stack)
-- [Stack do Frontend](frontend/docs/ARCHITECTURE.md#stack)
 | Camada | Tecnologia | Versão mínima |
 |---|---|---|
 | Frontend | Vue.js 3 + PrimeVue 4 + Tailwind CSS 4 | — |
@@ -92,10 +88,22 @@ docker compose exec backend alembic upgrade head
 
 ### Opção 2 — Sem Docker (desenvolvimento local)
 
-Veja os guias detalhados com passo a passo completo:
+**Backend** (Python 3.12 obrigatório):
+```bash
+cd backend
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env  # preencher as chaves
+alembic upgrade head
+uvicorn src.main:app --reload
+```
 
-- **Backend:** [backend/rodar_projeto.md](backend/rodar_projeto.md) — Python 3.12 obrigatório
-- **Frontend:** [frontend/rodar_projeto.md](frontend/rodar_projeto.md) — Node.js 20.19+ ou 22.12+
+**Frontend** (Node.js 20.19+ ou 22.12+, em outro terminal):
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ---
 

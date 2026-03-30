@@ -7,10 +7,8 @@ python-jose[cryptography]
 authlib
 google-generativeai
 pydantic-ai
-redis
 httpx
 pytest
 hypothesis
 pytest-asyncio
-fakeredis
 pytest-cov

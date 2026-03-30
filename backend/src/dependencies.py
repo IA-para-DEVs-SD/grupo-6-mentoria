@@ -1,13 +1,9 @@
-import time
-
-import redis
-from fastapi import Depends, HTTPException, Request
+from fastapi import Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
 
 from src.auth.models import User
 from src.auth.service import AuthService
-from src.config import settings
 from src.database import SessionLocal
 
 bearer_scheme = HTTPBearer()
@@ -32,28 +28,3 @@ def get_current_user(
     if user is None:
         raise HTTPException(status_code=401, detail="Token inválido ou ausente")
     return user
-
-
-def rate_limiter(
-    current_user: User = Depends(get_current_user),
-    request: Request = None,
-):
-    r = redis.from_url(settings.REDIS_URL)
-    key = f"rate:{current_user.id}"
-    now = time.time()
-    window_start = now - 60
-
-    pipe = r.pipeline()
-    pipe.zremrangebyscore(key, 0, window_start)
-    pipe.zadd(key, {str(now): now})
-    pipe.zcard(key)
-    pipe.expire(key, 60)
-    results = pipe.execute()
-
-    count = results[2]
-    if count > 60:
-        raise HTTPException(
-            status_code=429,
-            detail="Limite de requisições excedido",
-            headers={"Retry-After": "60"},
-        )
