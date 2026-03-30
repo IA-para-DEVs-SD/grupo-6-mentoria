@@ -233,21 +233,21 @@ def expired_jwt_token(sample_user_id):
 @pytest.fixture
 def mock_oauth_client():
     """Mock do cliente OAuth2."""
-    with patch("app.auth.service.OAuth2Client") as mock:
+    with patch("src.auth.service.OAuth2Client") as mock:
         yield mock
 
 
 @pytest.fixture
 def mock_gemini_client():
     """Mock do cliente Gemini."""
-    with patch("app.plans.service._gemini") as mock:
+    with patch("src.plans.service._gemini") as mock:
         yield mock
 
 
 @pytest.fixture
 def mock_redis():
     """Mock do Redis para rate limiting."""
-    with patch("app.dependencies.redis") as mock:
+    with patch("src.dependencies.redis") as mock:
         mock_instance = MagicMock()
         mock.from_url.return_value = mock_instance
         mock_instance.pipeline.return_value.__enter__ = MagicMock(return_value=mock_instance)
