@@ -13,6 +13,11 @@
 | [Arquitetura do Frontend](frontend/docs/ARCHITECTURE.md) | Stack, estrutura de pastas, diagramas UML e fluxo do usuário |
 | [Fluxograma de Funcionamento](frontend/docs/FLUXOGRAMA.md) | Fluxo completo do usuário na plataforma (login → onboarding → planos) |
 | [Vídeo de Demonstração](https://youtu.be/V7U0qqbPzmk) | Demonstração do projeto em funcionamento |
+| [Evidências de Prompts — Willian](backend/docs/prompts_evidencias/Willian) | Capturas de prompts utilizados por Willian |
+| [Evidências de Prompts — Taiane](backend/docs/prompts_evidencias/Taiane) | Capturas de prompts utilizados por Taiane |
+| [Evidências de Prompts — Murilo Henrique](backend/docs/prompts_evidencias/Murilo%20Henrique) | Capturas de prompts utilizados por Murilo Henrique |
+| [Evidências de Prompts — Murilo Corrêa](backend/docs/prompts_evidencias/Murilo%20Correa) | Capturas de prompts utilizados por Murilo Corrêa |
+| [Evidências de Prompts — Paulo Sérgio](frontend/docs/prompts_evidencias/Paulo%20S%C3%A9rgio) | Capturas de prompts utilizados por Paulo Sérgio |
 
 ---
 
